@@ -112,7 +112,7 @@ def card_html(site, page, base):
         face = (f"@font-face{{font-family:'og-font';src:url('{(base / site['font_file']).resolve().as_uri()}');"
                 f"font-weight:100 900}}")
         font = "og-font"
-    logo = site.get("logo_on_light") if theme == "light" and site.get("logo_on_light") else site.get("logo")
+    logo = site.get({"light": "logo_on_light", "dark": "logo_on_dark"}.get(theme, "logo")) or site.get("logo")
     uri = lambda p: (base / p).resolve().as_uri()
     e = html.escape
     brand = f'<img class="logo" src="{uri(logo)}">' if logo else f'<b class="name">{e(site.get("name", ""))}</b>'
@@ -188,7 +188,7 @@ def render(spec_path, out):
     if not pages:
         sys.exit(f"{spec_path}: no pages")
     base = spec_path.resolve().parent
-    for key in ("logo", "logo_on_light", "symbol", "font_file"):
+    for key in ("logo", "logo_on_light", "logo_on_dark", "symbol", "font_file"):
         if site.get(key) and not (base / site[key]).is_file():
             sys.exit(f"{spec_path}: site.{key} not found: {site[key]} (paths are relative to the JSON file)")
     for p in [site, *pages]:

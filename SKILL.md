@@ -21,13 +21,13 @@ script, look at the preview.**
      `ImageResponse`) using the same design.
 2. **Read the brand**: the accent color (CSS variables, Tailwind config, logo), the logo in a
    light version for colored and dark backgrounds and in its normal colors for light ones (a logo
-   kit has both), the symbol alone if there is one, and the font file if the site ships one.
+   kit has both; on the dark theme, `logo_on_dark` can keep the colored symbol), the symbol alone if there is one, and the font file if the site ships one.
 3. **Write the spec** `previews.json` at the project root (paths are relative to it):
    ```json
    {
      "site": {
-       "name": "lvni7", "domain": "lvni7.dev", "accent": "#FB1E58", "theme": "gradient",
-       "logo": "public/logo-white.svg", "logo_on_light": "public/logo.svg",
+       "name": "Lvni7", "domain": "lvni7.dev", "accent": "#FB1E58", "theme": "gradient",
+       "logo": "public/logo-white.svg", "logo_on_light": "public/logo.svg", "logo_on_dark": "public/logo-dark.svg",
        "symbol": "public/symbol.svg", "font_file": "public/fonts/Inter.woff2"
      },
      "pages": [

@@ -57,7 +57,7 @@ Ou utilise le script toi-même. Décris le site et ses pages dans un petit fichi
 
 ```json
 {
-  "site": { "name": "lvni7", "domain": "lvni7.dev", "accent": "#FB1E58", "theme": "gradient",
+  "site": { "name": "Lvni7", "domain": "lvni7.dev", "accent": "#FB1E58", "theme": "gradient",
             "logo": "logo-white.svg", "logo_on_light": "logo.svg", "symbol": "symbol.svg" },
   "pages": [
     { "file": "home", "label": "Fullstack developer", "title": "Web and mobile apps, *built to ship*",
@@ -77,6 +77,7 @@ python3 link_previews.py render previews.json --out link-previews   # un PNG par
 | `site.theme`, `pages[].theme` | `gradient` (par défaut), `dark` ou `light` | |
 | `site.logo` | Logo pour les thèmes dégradé et sombre (une version claire), SVG ou PNG | |
 | `site.logo_on_light` | Logo pour le thème clair | |
+| `site.logo_on_dark` | Logo pour le thème sombre (par défaut : `logo`) | |
 | `site.symbol` | Symbole dessiné en grand en arrière-plan | |
 | `site.background`, `site.light_background` | Couleurs de base des thèmes sombre et clair | |
 | `site.name`, `site.domain` | Écrit quand il n'y a pas de logo ; affiché en bas | |

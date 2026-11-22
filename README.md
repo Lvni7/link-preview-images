@@ -62,7 +62,7 @@ Or use the script yourself. Describe the site and its pages in a small JSON file
 
 ```json
 {
-  "site": { "name": "lvni7", "domain": "lvni7.dev", "accent": "#FB1E58", "theme": "gradient",
+  "site": { "name": "Lvni7", "domain": "lvni7.dev", "accent": "#FB1E58", "theme": "gradient",
             "logo": "logo-white.svg", "logo_on_light": "logo.svg", "symbol": "symbol.svg" },
   "pages": [
     { "file": "home", "label": "Fullstack developer", "title": "Web and mobile apps, *built to ship*",
@@ -82,6 +82,7 @@ python3 link_previews.py render previews.json --out link-previews   # one PNG pe
 | `site.theme`, `pages[].theme` | `gradient` (default), `dark` or `light` | |
 | `site.logo` | Logo for the gradient and dark themes (a light version), SVG or PNG | |
 | `site.logo_on_light` | Logo for the light theme | |
+| `site.logo_on_dark` | Logo for the dark theme (default: `logo`) | |
 | `site.symbol` | Symbol drawn large in the background | |
 | `site.background`, `site.light_background` | Base colors of the dark and light themes | |
 | `site.name`, `site.domain` | Written when there is no logo; shown at the bottom | |

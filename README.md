@@ -20,6 +20,7 @@ When someone shares a link on LinkedIn, X, WhatsApp, Slack or iMessage, the app 
 - **On brand:** your color, your logo, your font. The text color is picked for contrast, and long titles shrink to fit in 3 lines.
 - **Checked by eye:** a preview sheet shows each image as a large link card and as a small thumbnail, so an unreadable card is caught before anyone shares it.
 - **Checked by the script:** missing tags, relative image URLs, unreachable images, wrong sizes and images that are too heavy, on a built site or a live one.
+- **No machine-written tells:** the script refuses a long dash (—) in a card's text, and `check` flags one in your tags.
 - **Native wiring:** on Next.js the images become `opengraph-image.png` files, and the framework writes the tags. Anywhere else, the agent adds the meta tags.
 
 ![The preview sheet: each page as a large link card and as a small thumbnail](assets/preview-sheet.png)

@@ -24,6 +24,9 @@ from html.parser import HTMLParser
 from pathlib import Path
 
 W, H = 1200, 630
+# The long dash reads as machine-written: no text this skill writes may hold one. A spaced en
+# dash ("a – b") is the same dash in disguise; an unspaced one ("2020–2024") is a range and stays.
+LONG_DASH = re.compile(r"—|\s–\s")
 UA = {"User-Agent": "link-preview-images/1.0 (+https://github.com/Lvni7/link-preview-images)"}
 
 
@@ -135,7 +138,6 @@ body{{position:relative;padding:68px 80px 60px;background:{bg};color:{text};
 .desc{{font-size:29px;line-height:1.35;opacity:.86;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
   overflow:hidden;max-width:860px}}
 .foot{{position:relative;margin-top:36px;display:flex;align-items:center;gap:14px;font-size:24px;font-weight:600;opacity:.8}}
-.foot::before{{content:"";width:34px;height:3px;border-radius:2px;background:currentColor}}
 </style>
 {mark}
 {brand}
@@ -195,6 +197,10 @@ def render(spec_path, out):
     for p in pages:
         if not p.get("title") or not p.get("file"):
             sys.exit(f"{spec_path}: every page needs a 'file' and a 'title': {p}")
+    dashed = [f"{p['file']}.{k}" for p in pages for k in ("label", "title", "description") if LONG_DASH.search(p.get(k, ""))]
+    if dashed:
+        sys.exit(f"{spec_path}: no long dash (—) in a card's text; rewrite with a colon, a comma or two sentences: "
+                 + ", ".join(dashed))
     out = Path(out).resolve()
     out.mkdir(parents=True, exist_ok=True)
     chrome = find_chrome()
@@ -312,6 +318,9 @@ def audit(tags, title, load_image):
                         issues.append(("warn", f"og:image weighs {len(data) // 1024} KB: compress it under 1 MB"))
     if not tags.get("og:title") and not title.strip():
         issues.append(("error", "no title at all"))
+    for key in ("og:title", "og:description"):
+        if LONG_DASH.search(tags.get(key, "")):
+            issues.append(("warn", f"{key} holds a long dash (—): rewrite it with a colon or a comma"))
     return issues
 
 
@@ -356,6 +365,7 @@ def check(target):
 def test():
     assert readable_on("#0b0b12") == "#ffffff" and readable_on("#f5f5f5") == "#0b0b12"
     assert plain("Ship *fast*") == "Ship fast"
+    assert LONG_DASH.search("Apps — fast") and LONG_DASH.search("Apps – fast") and not LONG_DASH.search("2020–2024")
     m = Meta()
     m.feed('<title>T</title><meta property="og:title" content="A"><meta name="twitter:card" content="summary">')
     assert m.tags == {"og:title": "A", "twitter:card": "summary"} and m.title == "T"
@@ -366,6 +376,7 @@ def test():
     good = {"og:title": "A", "og:description": "B", "og:image": "https://x.com/a.png", "og:url": "https://x.com/",
             "twitter:card": "summary_large_image"}
     assert audit(good, "", lambda u: png) == []
+    assert any("long dash" in m for _, m in audit({**good, "og:title": "A — B"}, "", lambda u: png))
     assert ("error", "og:image must be an absolute URL: /a.png") in audit({**good, "og:image": "/a.png"}, "", None)
     assert any("1200×630" in m for _, m in audit(good, "", lambda u: png[:16] + struct.pack(">II", 800, 800)))
     print("ok")

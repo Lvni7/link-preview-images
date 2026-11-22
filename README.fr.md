@@ -15,6 +15,7 @@ Quand quelqu'un partage un lien sur LinkedIn, X, WhatsApp, Slack ou iMessage, l'
 - **À tes couleurs :** ta couleur, ton logo, ta police. La couleur du texte est choisie pour le contraste, et les titres longs rétrécissent pour tenir en 3 lignes.
 - **Vérifié à l'œil :** une planche montre chaque image en grande carte de lien et en petite vignette, pour repérer une carte illisible avant que quelqu'un la partage.
 - **Vérifié par le script :** balises manquantes, image en adresse relative, image inaccessible, mauvaise taille, image trop lourde, sur un site construit ou en ligne.
+- **Pas de tics de texte écrit par une machine :** le script refuse un tiret long (—) dans le texte d'une carte, et `check` le signale dans tes balises.
 - **Branchement natif :** sur Next.js, les images deviennent des fichiers `opengraph-image.png` et le framework écrit les balises lui-même. Ailleurs, l'agent ajoute les balises.
 
 ![La planche d'aperçu : chaque page en grande carte de lien et en petite vignette](assets/preview-sheet.png)

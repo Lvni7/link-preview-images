@@ -1,6 +1,6 @@
 ---
 name: link-preview-images
-description: Use when a website needs its link previews — Open Graph images, og:image, social share images, Twitter/X cards, the picture shown when a link is shared on LinkedIn, X, WhatsApp, Slack or iMessage — made, fixed or checked, for one page or every page. Also when the user says "OG images", "share images", "link previews", "aperçu des liens", "images de partage", "image OG", "quand je partage le lien il n'y a pas d'image". Not for the site's favicon or logo files (that is a logo kit).
+description: Use when a website needs its link previews (Open Graph images, og:image, social share images, Twitter/X cards, the picture shown when a link is shared on LinkedIn, X, WhatsApp, Slack or iMessage) made, fixed or checked, for one page or every page. Also when the user says "OG images", "share images", "link previews", "aperçu des liens", "images de partage", "image OG", "quand je partage le lien il n'y a pas d'image". Not for the site's favicon or logo files (that is a logo kit).
 ---
 
 # Link preview images
@@ -46,6 +46,10 @@ script, look at the preview.**
      unless given; without `logo`, `name` is written instead.
    - Use each page's real title, shortened if it is over about 70 characters. The `*` marks are
      for the image only: never put them in the page's `og:title`.
+   - **Never a long dash (—)**, nor a dash between spaces (" – "), in anything you write: card
+     texts, `og:title`, `og:description`, alt texts. It reads as machine-written. Use a colon, a
+     comma or two sentences. The script refuses a card that holds one, and `check` flags it in
+     the tags.
 4. **Run**:
    ```bash
    python3 <skill-dir>/link_previews.py render previews.json --out link-previews
@@ -86,6 +90,7 @@ script, look at the preview.**
 
 ## Common mistakes
 
+- A long dash (—) in a title or description, copied from the page or written by habit.
 - A relative `og:image` (`/og/home.png`): apps ignore it. Always the full URL.
 - Saying "done" without looking at `preview.png`. The script checks sizes, not readability.
 - Forgetting caches: LinkedIn and Facebook keep an old preview for days. After deploying, tell
